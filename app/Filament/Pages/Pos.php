@@ -4,6 +4,10 @@ namespace App\Filament\Pages;
 
 use App\Filament\Pages\Traits\HasCart;
 use App\Filament\Pages\Traits\HasCheckout;
+use App\Filament\Resources\OrderResource;
+use App\Models\Cart;
+use App\Models\Order;
+use App\Models\Product;
 use Filament\Actions\Action;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -13,16 +17,12 @@ use Filament\Pages\Page;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
+// ======================= NEED TO INSTALL ANOTHER LIBRARIES =======================
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Str;
-// ======================= NEED TO INSTALL ANOTHER LIBRARIES =======================
 use TomatoPHP\FilamentCms\Models\Category;
-use TomatoPHP\FilamentEcommerce\Filament\Resources\OrderResource;
-use TomatoPHP\FilamentEcommerce\Models\Cart;
-use TomatoPHP\FilamentEcommerce\Models\Order;
-use TomatoPHP\FilamentEcommerce\Models\Product;
 
 // ======================= NEED TO INSTALL ANOTHER LIBRARIES =======================
 

@@ -2,12 +2,12 @@
 
 namespace App\Filament\Widgets;
 
+use App\Models\Order;
 use Carbon\Carbon;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
-use Filament\Widgets\StatsOverviewWidget\Stat;
 // ======================= NEED TO INSTALL ANOTHER LIBRARIES =======================
+use Filament\Widgets\StatsOverviewWidget\Stat;
 use Flowframe\Trend\Trend;
-use TomatoPHP\FilamentEcommerce\Models\Order;
 
 // ======================= NEED TO INSTALL ANOTHER LIBRARIES =======================
 

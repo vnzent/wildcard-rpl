@@ -2,22 +2,22 @@
 
 namespace App\Filament\Pages\Traits;
 
+use App\Facades\Ecommerce;
+use App\Models\Cart;
+use App\Models\Coupon;
+use App\Models\Order;
+use App\Models\Product;
 use Carbon\Carbon;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
+// ======================= NEED TO INSTALL ANOTHER LIBRARIES =======================
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Notifications\Notification;
-// ======================= NEED TO INSTALL ANOTHER LIBRARIES =======================
 use TomatoPHP\FilamentAccounts\Models\Account;
-use TomatoPHP\FilamentEcommerce\Facades\FilamentEcommerce;
-use TomatoPHP\FilamentEcommerce\Models\Cart;
-use TomatoPHP\FilamentEcommerce\Models\Coupon;
-use TomatoPHP\FilamentEcommerce\Models\Order;
-use TomatoPHP\FilamentEcommerce\Models\Product;
 
 // ======================= NEED TO INSTALL ANOTHER LIBRARIES =======================
 
@@ -118,7 +118,7 @@ trait HasCheckout
                                             }
                                         }
 
-                                        $getCouponDiscount = FilamentEcommerce::coupon()
+                                        $getCouponDiscount = Ecommerce::coupon()
                                             ->products($productIds)
                                             ->discount(code: $get('coupon'), total: $total);
 

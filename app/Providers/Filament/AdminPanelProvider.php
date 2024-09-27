@@ -2,8 +2,22 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\OrderReceiptSettingsPage;
+use App\Filament\Pages\OrderSettingsPage;
+use App\Filament\Pages\OrderStatusSettingsPage;
 use App\Filament\Pages\Pos;
+use App\Filament\Resources\CompanyResource;
+use App\Filament\Resources\CouponResource;
+use App\Filament\Resources\GiftCardResource;
+use App\Filament\Resources\OrderResource;
+use App\Filament\Resources\ProductResource;
+use App\Filament\Resources\ReferralCodeResource;
+use App\Filament\Resources\ShippingVendorResource;
 use App\Filament\Resources\TypeResource;
+use App\Filament\Widgets\OrderPaymentMethodChart;
+use App\Filament\Widgets\OrderSourceChart;
+use App\Filament\Widgets\OrdersStateWidget;
+use App\Filament\Widgets\OrderStateChart;
 use App\Filament\Widgets\POSStateWidget;
 use Exception;
 use Filament\Http\Middleware\Authenticate;
@@ -42,13 +56,24 @@ class AdminPanelProvider extends PanelProvider
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
                 Pages\Dashboard::class,
+
                 Pos::class,
+
+                OrderSettingsPage::class,
+                OrderStatusSettingsPage::class,
+                OrderReceiptSettingsPage::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
+
                 POSStateWidget::class,
+
+                OrdersStateWidget::class,
+                OrderPaymentMethodChart::class,
+                OrderSourceChart::class,
+                OrderStateChart::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -66,7 +91,16 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->resources([
                 TypeResource::class,
+
+                CompanyResource::class,
+                ProductResource::class,
+                OrderResource::class,
+                ShippingVendorResource::class,
+                CouponResource::class,
+                GiftCardResource::class,
+                ReferralCodeResource::class,
             ])
-            ->plugin(SpatieLaravelTranslatablePlugin::make()->defaultLocales(['en', 'ar']));
+            ->plugin(SpatieLaravelTranslatablePlugin::make()->defaultLocales(['en', 'ar']))
+            ->plugin(FilamentSettingsHubPlugin::make());
     }
 }
