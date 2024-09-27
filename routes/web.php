@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BuilderController;
+use App\Livewire\Otp;
 use App\Models\Order;
 use Illuminate\Support\Facades\Route;
 use ProtoneMedia\Splade\Http\SpladeMiddleware;
@@ -36,3 +37,7 @@ Route::middleware(['web', 'auth', SpladeMiddleware::class])->name('admin.')->gro
     Route::post('admin/pages/{model}/meta', [BuilderController::class, 'metaStore'])->name('pages.meta.store');
     Route::post('admin/pages/{model}/clear', [BuilderController::class, 'clear'])->name('pages.clear');
 });
+
+Route::get('otp', Otp::class)
+    ->middleware('web', 'throttle:10')
+    ->name('otp');

@@ -6,9 +6,11 @@ use App\Facades\CMS;
 use App\Filament\Pages\OrderReceiptSettingsPage;
 use App\Filament\Pages\OrderSettingsPage;
 use App\Filament\Pages\OrderStatusSettingsPage;
+use App\Services\BuildAuth;
+use App\Services\CMSServices;
 use App\Services\Contracts\CmsType;
 use App\Services\EcommerceServices;
-use App\Services\CMSServices;
+use App\Services\FilamentAccountsServices;
 use App\Services\TypesRegister;
 use Illuminate\Support\ServiceProvider;
 use TomatoPHP\FilamentSettingsHub\Facades\FilamentSettingsHub;
@@ -28,6 +30,14 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind('cms', function () {
             return new CMSServices;
+        });
+
+        $this->app->bind('accounts', function () {
+            return new FilamentAccountsServices;
+        });
+
+        $this->app->bind('accounts-auth', function () {
+            return new BuildAuth;
         });
     }
 

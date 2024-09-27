@@ -3,6 +3,7 @@
 namespace App\Filament\Pages\Traits;
 
 use App\Facades\Ecommerce;
+use App\Models\Account;
 use App\Models\Cart;
 use App\Models\Coupon;
 use App\Models\Order;
@@ -10,14 +11,13 @@ use App\Models\Product;
 use Carbon\Carbon;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Hidden;
-use Filament\Forms\Components\Select;
 // ======================= NEED TO INSTALL ANOTHER LIBRARIES =======================
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Notifications\Notification;
-use TomatoPHP\FilamentAccounts\Models\Account;
 
 // ======================= NEED TO INSTALL ANOTHER LIBRARIES =======================
 
@@ -67,11 +67,11 @@ trait HasCheckout
                         ])
                         ->createOptionUsing(function (array $data) {
                             $data['is_active'] = 1;
-                            $account = \TomatoPHP\FilamentAccounts\Models\Account::create($data);
+                            $account = \App\Models\Account::create($data);
 
                             return $account->id;
                         })
-                        ->options(\TomatoPHP\FilamentAccounts\Models\Account::query()->where('is_active', 1)->pluck('name', 'id')),
+                        ->options(\App\Models\Account::query()->where('is_active', 1)->pluck('name', 'id')),
                     Select::make('payment_method')
                         ->label(trans('filament-pos::messages.actions.checkout.form.payment_method'))
                         ->default('cash')

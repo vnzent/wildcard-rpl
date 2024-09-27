@@ -2,13 +2,24 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\AccountRequest;
+use App\Filament\Pages\Auth\LoginAccount;
+use App\Filament\Pages\EditAddress;
+use App\Filament\Pages\EditProfile;
 use App\Filament\Pages\OrderReceiptSettingsPage;
 use App\Filament\Pages\OrderSettingsPage;
 use App\Filament\Pages\OrderStatusSettingsPage;
 use App\Filament\Pages\Pos;
 use App\Filament\Pages\Themes;
+use App\Filament\Resources\AccountRequestResource;
+use App\Filament\Resources\AccountRequestResource\Pages\RequestsStatus;
+use App\Filament\Resources\AccountRequestResource\Pages\RequestsTypes;
+use App\Filament\Resources\AccountResource;
+use App\Filament\Resources\AccountResource\Pages\AccountTypes;
 use App\Filament\Resources\CategoryResource;
 use App\Filament\Resources\CompanyResource;
+use App\Filament\Resources\ContactResource;
+use App\Filament\Resources\ContactResource\Pages\ContactStatusTypes;
 use App\Filament\Resources\CouponResource;
 use App\Filament\Resources\FormResource;
 use App\Filament\Resources\GiftCardResource;
@@ -41,6 +52,8 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use TomatoPHP\FilamentAlerts\FilamentAlertsPlugin;
+use TomatoPHP\FilamentLocations\FilamentLocationsPlugin;
 use TomatoPHP\FilamentSettingsHub\FilamentSettingsHubPlugin;
 
 class AdminPanelProvider extends PanelProvider
@@ -54,7 +67,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->login()
+            ->login(LoginAccount::class)
             ->colors([
                 'primary' => Color::Amber,
             ])
@@ -70,6 +83,14 @@ class AdminPanelProvider extends PanelProvider
                 OrderReceiptSettingsPage::class,
 
                 Themes::class,
+
+                AccountTypes::class,
+                ContactStatusTypes::class,
+                RequestsStatus::class,
+                RequestsTypes::class,
+                EditProfile::class,
+                EditAddress::class,
+                AccountRequest::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
@@ -111,12 +132,17 @@ class AdminPanelProvider extends PanelProvider
                 CategoryResource::class,
                 PostResource::class,
                 FormResource::class,
+
+                AccountResource::class,
+                AccountRequestResource::class,
+                ContactResource::class,
             ])
             ->livewireComponents([
                 BuilderToolbar::class,
             ])
-            ->plugin(SpatieLaravelTranslatablePlugin::make()->defaultLocales(['en', 'ar']))
+            ->plugin(SpatieLaravelTranslatablePlugin::make()->defaultLocales(['en']))
             ->plugin(FilamentSettingsHubPlugin::make())
-            ;
+            ->plugin(FilamentLocationsPlugin::make())
+            ->plugin(FilamentAlertsPlugin::make());
     }
 }
