@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Translatable\HasTranslations;
-use TomatoPHP\FilamentCms\Models\Category;
 
 /**
  * @property int $id

@@ -6,10 +6,14 @@ use App\Filament\Pages\OrderReceiptSettingsPage;
 use App\Filament\Pages\OrderSettingsPage;
 use App\Filament\Pages\OrderStatusSettingsPage;
 use App\Filament\Pages\Pos;
+use App\Filament\Pages\Themes;
+use App\Filament\Resources\CategoryResource;
 use App\Filament\Resources\CompanyResource;
 use App\Filament\Resources\CouponResource;
+use App\Filament\Resources\FormResource;
 use App\Filament\Resources\GiftCardResource;
 use App\Filament\Resources\OrderResource;
+use App\Filament\Resources\PostResource;
 use App\Filament\Resources\ProductResource;
 use App\Filament\Resources\ReferralCodeResource;
 use App\Filament\Resources\ShippingVendorResource;
@@ -19,6 +23,7 @@ use App\Filament\Widgets\OrderSourceChart;
 use App\Filament\Widgets\OrdersStateWidget;
 use App\Filament\Widgets\OrderStateChart;
 use App\Filament\Widgets\POSStateWidget;
+use App\Livewire\BuilderToolbar;
 use Exception;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -36,6 +41,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use TomatoPHP\FilamentSettingsHub\FilamentSettingsHubPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -62,6 +68,8 @@ class AdminPanelProvider extends PanelProvider
                 OrderSettingsPage::class,
                 OrderStatusSettingsPage::class,
                 OrderReceiptSettingsPage::class,
+
+                Themes::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
@@ -99,8 +107,16 @@ class AdminPanelProvider extends PanelProvider
                 CouponResource::class,
                 GiftCardResource::class,
                 ReferralCodeResource::class,
+
+                CategoryResource::class,
+                PostResource::class,
+                FormResource::class,
+            ])
+            ->livewireComponents([
+                BuilderToolbar::class,
             ])
             ->plugin(SpatieLaravelTranslatablePlugin::make()->defaultLocales(['en', 'ar']))
-            ->plugin(FilamentSettingsHubPlugin::make());
+            ->plugin(FilamentSettingsHubPlugin::make())
+            ;
     }
 }

@@ -18,6 +18,7 @@
         "livewire/livewire": "^3.5",
         "tomatophp/console-helpers": "^1.1",
         "tomatophp/filament-icons": "^1.1",
+        "tomatophp/filament-settings-hub": "*",
         "tomatophp/filament-translation-component": "^1.0"
     },
     "require-dev": {
