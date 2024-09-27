@@ -11,31 +11,31 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Translatable\HasTranslations;
 
 /**
- * @property integer $id
- * @property integer $parent_id
+ * @property int $id
+ * @property int $parent_id
  * @property string $name
  * @property string $key
  * @property string $description
  * @property string $color
  * @property string $icon
  * @property string $model_type
- * @property integer $model_id
- * @property boolean $is_activated
+ * @property int $model_id
+ * @property bool $is_activated
  * @property string $created_at
  * @property string $updated_at
  * @property Type[] $typables
  */
 class Type extends CachedModel implements HasMedia
 {
-    use InteractsWithMedia;
-    use HasTranslations;
     use Cachable;
+    use HasTranslations;
+    use InteractsWithMedia;
 
-    protected $cachePrefix = "tomato_types_";
+    protected $cachePrefix = 'tomato_types_';
 
     public array $translatable = [
         'name',
-        'description'
+        'description',
     ];
 
     protected $fillable = [

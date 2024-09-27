@@ -5,10 +5,10 @@ namespace App\Filament\Widgets;
 use Carbon\Carbon;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
-
 // ======================= NEED TO INSTALL ANOTHER LIBRARIES =======================
 use Flowframe\Trend\Trend;
 use TomatoPHP\FilamentEcommerce\Models\Order;
+
 // ======================= NEED TO INSTALL ANOTHER LIBRARIES =======================
 
 class POSStateWidget extends BaseWidget

@@ -2,6 +2,8 @@
 
 namespace App\Filament\Pages;
 
+use App\Filament\Pages\Traits\HasCart;
+use App\Filament\Pages\Traits\HasCheckout;
 use Filament\Actions\Action;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -15,15 +17,13 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Str;
-use App\Filament\Pages\Traits\HasCart;
-use App\Filament\Pages\Traits\HasCheckout;
-
 // ======================= NEED TO INSTALL ANOTHER LIBRARIES =======================
 use TomatoPHP\FilamentCms\Models\Category;
 use TomatoPHP\FilamentEcommerce\Filament\Resources\OrderResource;
 use TomatoPHP\FilamentEcommerce\Models\Cart;
 use TomatoPHP\FilamentEcommerce\Models\Order;
 use TomatoPHP\FilamentEcommerce\Models\Product;
+
 // ======================= NEED TO INSTALL ANOTHER LIBRARIES =======================
 
 class Pos extends Page implements HasForms, HasTable

@@ -4,13 +4,13 @@ namespace App\Filament\Pages;
 
 use App\Components\TypeColumn;
 use App\Models\Type;
+use Filament\Actions\Action;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
-use Filament\Actions\Action;
 use Filament\Pages\Page;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
@@ -73,7 +73,7 @@ class BaseTypePage extends Page implements HasForms, HasTable
                 }),
             Action::make('back')
                 ->label(trans('types.back'))
-                ->url(fn() => $this->getBackUrl())
+                ->url(fn () => $this->getBackUrl())
                 ->color('warning')
                 ->icon('heroicon-s-arrow-left'),
         ];
@@ -106,7 +106,7 @@ class BaseTypePage extends Page implements HasForms, HasTable
                 ->where('type', $this->getType())
                 ->where('key', $type->key)
                 ->first();
-            if (!$exists) {
+            if (! $exists) {
                 $type->for = $this->getFor();
                 $type->type = $this->getType();
                 $exists = Type::create($type->toArray());
@@ -184,7 +184,7 @@ class BaseTypePage extends Page implements HasForms, HasTable
                                     ->send();
                             }),
                     ])
-                    ->fillForm(fn($record) => $record->toArray())
+                    ->fillForm(fn ($record) => $record->toArray())
                     ->icon('heroicon-s-pencil-square')
                     ->iconButton()
                     ->action(function (array $data, Type $type) {

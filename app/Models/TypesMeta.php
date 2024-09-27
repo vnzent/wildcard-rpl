@@ -7,9 +7,9 @@ use GeneaLabs\LaravelModelCaching\Traits\Cachable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * @property integer $id
- * @property integer $type_id
- * @property integer $model_id
+ * @property int $id
+ * @property int $type_id
+ * @property int $model_id
  * @property string $model_type
  * @property string $key
  * @property mixed $value
@@ -21,7 +21,7 @@ class TypesMeta extends CachedModel
 {
     use Cachable;
 
-    protected $cachePrefix = "tomato_types_meta_";
+    protected $cachePrefix = 'tomato_types_meta_';
 
     protected $fillable = [
         'type_id',

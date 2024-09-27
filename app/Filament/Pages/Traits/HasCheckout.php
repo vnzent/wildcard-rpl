@@ -11,7 +11,6 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Notifications\Notification;
-
 // ======================= NEED TO INSTALL ANOTHER LIBRARIES =======================
 use TomatoPHP\FilamentAccounts\Models\Account;
 use TomatoPHP\FilamentEcommerce\Facades\FilamentEcommerce;
@@ -19,6 +18,7 @@ use TomatoPHP\FilamentEcommerce\Models\Cart;
 use TomatoPHP\FilamentEcommerce\Models\Coupon;
 use TomatoPHP\FilamentEcommerce\Models\Order;
 use TomatoPHP\FilamentEcommerce\Models\Product;
+
 // ======================= NEED TO INSTALL ANOTHER LIBRARIES =======================
 
 trait HasCheckout

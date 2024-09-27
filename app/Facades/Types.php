@@ -5,7 +5,6 @@ namespace App\Facades;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Facade;
 
-
 /**
  * @method static void register(array|string $type, string $for)
  * @method static Collection getFor()

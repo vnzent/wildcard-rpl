@@ -12,7 +12,7 @@ class ListTypes extends ManageRecords
 {
     use ManageRecords\Concerns\Translatable;
 
-//    #[Reactive]
+    //    #[Reactive]
     public ?string $activeLocale = null;
 
     public function getTitle(): string

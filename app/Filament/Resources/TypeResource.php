@@ -4,8 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Components\TypeColumn;
 use App\Facades\Types;
-use App\Models\Type;
 use App\Filament\Resources\TypeResource\Pages;
+use App\Models\Type;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Concerns\Translatable;
