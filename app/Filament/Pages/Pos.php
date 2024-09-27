@@ -42,17 +42,17 @@ class Pos extends Page implements HasForms, HasTable
 
     public static function getNavigationGroup(): ?string
     {
-        return trans('filament-pos::messages.group');
+        return trans('pos.group');
     }
 
     public static function getNavigationLabel(): string
     {
-        return trans('filament-pos::messages.title');
+        return trans('pos.title');
     }
 
     public function getTitle(): string|Htmlable
     {
-        return trans('filament-pos::messages.title');
+        return trans('pos.title');
     }
 
     protected function getHeaderActions(): array
@@ -79,23 +79,23 @@ class Pos extends Page implements HasForms, HasTable
         return $table->query(Product::query()->where('is_activated', 1))
             ->columns([
                 Tables\Columns\SpatieMediaLibraryImageColumn::make('feature_image')
-                    ->label(trans('filament-pos::messages.table.columns.image'))
+                    ->label(trans('pos.table.columns.image'))
                     ->square()
                     ->collection('feature_image'),
                 TextColumn::make('name')
-                    ->label(trans('filament-pos::messages.table.columns.name'))
+                    ->label(trans('pos.table.columns.name'))
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('sku')
-                    ->label(trans('filament-pos::messages.table.columns.sku'))
+                    ->label(trans('pos.table.columns.sku'))
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('barcode')
-                    ->label(trans('filament-pos::messages.table.columns.barcode'))
+                    ->label(trans('pos.table.columns.barcode'))
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('price')
-                    ->label(trans('filament-pos::messages.table.columns.price'))
+                    ->label(trans('pos.table.columns.price'))
                     ->state(fn (Product $product) => ($product->price + $product->vat) - $product->discount)
                     ->description(fn (Product $product) => '(Price:'.number_format($product->price, 2).'+VAT:'.number_format($product->vat).')-Discount:'.number_format($product->discount))
                     ->money(locale: 'en', currency: setting('site_currency'))
@@ -103,8 +103,8 @@ class Pos extends Page implements HasForms, HasTable
             ])
             ->actions([
                 Tables\Actions\Action::make('addToCart')
-                    ->label(trans('filament-pos::messages.table.actions.addToCart'))
-                    ->tooltip(trans('filament-pos::messages.table.actions.addToCart'))
+                    ->label(trans('pos.table.actions.addToCart'))
+                    ->tooltip(trans('pos.table.actions.addToCart'))
                     ->iconButton()
                     ->icon('heroicon-s-shopping-cart')
                     ->action(function ($record) {
@@ -130,10 +130,10 @@ class Pos extends Page implements HasForms, HasTable
 
                     }),
             ])
-            ->searchPlaceholder(trans('filament-pos::messages.table.search'))
+            ->searchPlaceholder(trans('pos.table.search'))
             ->filters([
                 Tables\Filters\SelectFilter::make('category_id')
-                    ->label(trans('filament-pos::messages.table.filters.category_id'))
+                    ->label(trans('pos.table.filters.category_id'))
                     ->searchable()
                     ->options(Category::query()
                         ->where('for', 'product')
@@ -157,17 +157,17 @@ class Pos extends Page implements HasForms, HasTable
     public function notifyAndPrint(Order $order)
     {
         Notification::make()
-            ->title(trans('filament-pos::messages.notifications.checkout.title'))
-            ->body(trans('filament-pos::messages.notifications.checkout.message', ['uuid' => $order->uuid]))
+            ->title(trans('pos.notifications.checkout.title'))
+            ->body(trans('pos.notifications.checkout.message', ['uuid' => $order->uuid]))
             ->success()
             ->actions([
                 \Filament\Notifications\Actions\Action::make('print')
-                    ->label(trans('filament-pos::messages.notifications.checkout.print'))
+                    ->label(trans('pos.notifications.checkout.print'))
                     ->icon('heroicon-o-printer')
                     ->url(route('order.print', $order->id))
                     ->openUrlInNewTab(),
                 \Filament\Notifications\Actions\Action::make('preview')
-                    ->label(trans('filament-pos::messages.notifications.checkout.view'))
+                    ->label(trans('pos.notifications.checkout.view'))
                     ->icon('heroicon-o-eye')
                     ->color('warning')
                     ->url(OrderResource::getUrl('view', ['record' => $order->id]))
