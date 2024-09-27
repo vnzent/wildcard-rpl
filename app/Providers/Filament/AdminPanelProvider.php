@@ -5,6 +5,7 @@ namespace App\Providers\Filament;
 use App\Filament\Pages\Pos;
 use App\Filament\Resources\TypeResource;
 use App\Filament\Widgets\POSStateWidget;
+use Exception;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -24,6 +25,9 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class AdminPanelProvider extends PanelProvider
 {
+    /**
+     * @throws Exception
+     */
     public function panel(Panel $panel): Panel
     {
         return $panel
