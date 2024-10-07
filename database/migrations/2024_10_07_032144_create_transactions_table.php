@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('code')->unique();
             $table->foreignIdFor(User::class)->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();
             $table->foreignIdFor(Order::class)->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();
-            $table->timestamp('transaction_date')->useCurrent();
+            $table->timestamp('date')->useCurrent();
             $table->unsignedBigInteger('total_price')->default(0);
             $table->softDeletes();
             $table->timestamps();

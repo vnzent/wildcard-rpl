@@ -14,12 +14,20 @@ class Transaction extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'code',
         'user_id',
         'order_id',
-        'transaction_date',
+        'date',
         'total_price',
     ];
+
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::creating(function (self $model) {
+            $model->code = "JAV-" . date('Ymd') . "-" . sprintf("%03d", self::count(['id']) + 1);
+        });
+    }
 
     public function user(): BelongsTo
     {
