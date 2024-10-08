@@ -20,7 +20,7 @@ class PaymentFactory extends Factory
     {
         return [
             'amount' => $this->faker->randomFloat(2, 10, 100),
-            'type' => PaymentType::cases()[rand(0, sizeof(PaymentType::cases()) - 1)],
+            'type' => PaymentType::cases()[rand(0, count(PaymentType::cases()) - 1)],
         ];
     }
 }

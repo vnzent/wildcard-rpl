@@ -25,7 +25,7 @@ class Transaction extends Model
         parent::boot();
 
         static::creating(function (self $model) {
-            $model->code = "JAV-" . date('Ymd') . "-" . sprintf("%03d", self::count(['id']) + 1);
+            $model->code = 'JAV-'.date('Ymd').'-'.sprintf('%03d', self::count(['id']) + 1);
         });
     }
 

@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Str;
 
 class Order extends Model
 {
@@ -23,7 +22,7 @@ class Order extends Model
         parent::boot();
 
         static::creating(function (self $model) {
-            $model->code = "ORD-" . date('Ymd') . "-" . sprintf("%03d", self::count(['id']) + 1);
+            $model->code = 'ORD-'.date('Ymd').'-'.sprintf('%03d', self::count(['id']) + 1);
         });
     }
 
