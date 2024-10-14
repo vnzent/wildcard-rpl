@@ -19,7 +19,7 @@ class ProductFactory extends Factory
     {
         return [
             'code' => $this->faker->unique()->ean8(),
-            'name' => 'product - ' . $this->faker->words(5, true),
+            'name' => 'product - '.$this->faker->words(5, true),
             'description' => $this->faker->text(),
             'price' => (int) $this->faker->randomFloat(2, 10, 100),
             'quantity' => (int) $this->faker->randomFloat(2, 10, 100),

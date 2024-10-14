@@ -28,7 +28,7 @@ class Transaction extends Model
         static::creating(function (self $model) {
             $lastId = self::latest('id')->first()->id ?? 0;
 
-            $model->code = sprintf("XNX-%s-%s", date('Ymd'), str_pad(++$lastId, 3, '0', STR_PAD_LEFT));
+            $model->code = sprintf('XNX-%s-%s', date('Ymd'), str_pad(++$lastId, 3, '0', STR_PAD_LEFT));
         });
     }
 

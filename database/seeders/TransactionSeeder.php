@@ -6,7 +6,6 @@ use App\Models\Order;
 use App\Models\Payment;
 use App\Models\Transaction;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class TransactionSeeder extends Seeder
