@@ -15,11 +15,12 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->string('code')->unique();
-            $table->foreignIdFor(User::class)->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();
             $table->foreignIdFor(Order::class)->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();
-            $table->date('date');
-            $table->unsignedBigInteger('total_price');
+            $table->string('code')->unique(); // unique code for each transaction
+            $table->unsignedBigInteger('total_amount');
+            $table->unsignedBigInteger('discount');
+            $table->unsignedBigInteger('grand_total');
+            $table->foreignIdFor(User::class, 'cashier_id')->nullable()->constrained('users')->cascadeOnUpdate()->nullOnDelete();
             $table->softDeletes();
             $table->timestamps();
         });

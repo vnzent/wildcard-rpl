@@ -18,7 +18,6 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
-            'date' => $this->faker->date(),
             'total_price' => $this->faker->numberBetween(1000, 10000),
         ];
     }

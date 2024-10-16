@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignIdFor(Order::class)->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignIdFor(Product::class)->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();
             $table->unsignedInteger('quantity')->default(1);
-            $table->unsignedBigInteger('product_price');
+            $table->unsignedBigInteger('product_price'); // price at the time of order
             $table->timestamps();
         });
     }
