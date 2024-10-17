@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('order_number')->unique();
             $table->foreignIdFor(Customer::class)->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();
+            $table->unsignedSmallInteger('status')->default(1);
             $table->softDeletes();
             $table->timestamps();
         });
