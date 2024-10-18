@@ -22,6 +22,7 @@ class CategoryResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name')
+                    ->required()
                     ->label('Name')
                     ->unique(),
             ]);
