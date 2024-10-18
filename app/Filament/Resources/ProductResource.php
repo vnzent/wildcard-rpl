@@ -9,11 +9,11 @@ use Faker\Provider\ar_EG\Text;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Support\Enums\FontWeight;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Str;
 
 class ProductResource extends Resource
 {
@@ -27,8 +27,8 @@ class ProductResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('code')
-                    ->label('Code')
+                Forms\Components\TextInput::make('sku')
+                    ->label('SKU')
                     ->required()
                     ->placeholder('Enter the product code')
                     ->disabled(function ($record) {
@@ -59,16 +59,21 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('code')
+                TextColumn::make('sku')
+                    ->label('SKU')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('name')
+                    ->weight(FontWeight::SemiBold)
+                    ->description(fn (Product $product) => Str::limit($product->description, 60))
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('quantity')
+                    ->alignRight()
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('price')
+                    ->money('IDR', locale: 'id')
                     ->searchable()
                     ->sortable(),
             ])
