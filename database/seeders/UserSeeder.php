@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -12,18 +13,15 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\User::factory()->create([
-            'name' => 'admin',
-            'email' => 'admin@example.com',
-            'password' => bcrypt('password'),
+        User::factory()->createMany([
+            ['name' => 'admin', 'email' => 'admin@example.com', 'role' => Role::ADMINISTRATOR],
+            ['name' => 'Arikusuma Wardana', 'email' => 'arikusuma@arijaya.com', 'role' => Role::ADMINISTRATOR],
+            ['name' => 'Nauval Khilmi', 'email' => 'nauvalkhilmi@arijaya.com', 'role' => Role::ADMINISTRATOR],
+            ['name' => 'Adi Aryasuta', 'email' => 'adiaryasuta@arijaya.com', 'role' => Role::ADMINISTRATOR],
+            ['name' => 'Vincent Dua Orang', 'email' => 'vincentptk@arijaya.com', 'role' => Role::ADMINISTRATOR],
+            ['name' => 'Momet Dwika', 'email' => 'mometdwika@arijaya.com', 'role' => Role::ADMINISTRATOR],
         ]);
 
-        // User::factory()->createMany([
-        //     ['name' => 'Arikusuma Wardana', 'email' => 'arikusuma@arijaya.com'],
-        //     ['name' => 'Nauval Khilmi', 'email' => 'nauvalkhilmi@arijaya.com'],
-        //     ['name' => 'Adi Aryasuta', 'email' => 'adiaryasuta@arijaya.com'],
-        //     ['name' => 'Vincent Dua Orang', 'email' => 'vincentptk@arijaya.com'],
-        //     ['name' => 'Momet Dwika', 'email' => 'mometdwika@arijaya.com'],
-        // ]);
+        User::factory()->count(14)->create();
     }
 }
