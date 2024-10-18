@@ -4,7 +4,6 @@ namespace App\Filament\Resources\OrderResource\Pages;
 
 use App\Enums\OrderStatus;
 use App\Filament\Resources\OrderResource;
-use Filament\Actions;
 use Filament\Actions\Action;
 use Filament\Resources\Pages\CreateRecord;
 
@@ -20,14 +19,14 @@ class CreateOrder extends CreateRecord
                 ->label('Pay') // Label for the button
                 ->icon('heroicon-o-banknotes') // Optional: Cash icon for the button
                 ->action(function () {
-                     // Get the form data
-                     $data = $this->form->getState();
+                    // Get the form data
+                    $data = $this->form->getState();
 
-                     // Add the status field to the form data (set to PROCESSING)
-                     $data['status'] = OrderStatus::PROCESSING;
- 
-                     // Save the record with the new status
-                     $this->create();
+                    // Add the status field to the form data (set to PROCESSING)
+                    $data['status'] = OrderStatus::PROCESSING;
+
+                    // Save the record with the new status
+                    $this->create();
 
                     // Redirect to the transaction creation page with the saved order ID
                     return redirect()->route('filament.admin.resources.transactions.create', [
@@ -35,7 +34,7 @@ class CreateOrder extends CreateRecord
                     ]);
                 })
                 ->requiresConfirmation() // Optional: ask for confirmation before processing
-                ->color('success') // Optional: green color for the "Pay" button
+                ->color('success'), // Optional: green color for the "Pay" button
         ];
     }
 }

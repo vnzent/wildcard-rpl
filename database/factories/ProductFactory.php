@@ -19,10 +19,10 @@ class ProductFactory extends Factory
     {
         return [
             'sku' => $this->faker->unique()->ean8(),
-            'name' => 'product - '.$this->faker->words(5, true),
+            'name' => 'product - '.$this->faker->words(3, true),
             'description' => $this->faker->text(),
-            'price' => (int) $this->faker->randomFloat(2, 10, 100),
-            'quantity' => (int) $this->faker->randomFloat(2, 10, 100),
+            'price' => $this->faker->numberBetween(10000, 1000000),
+            'quantity' => $this->faker->numberBetween(10, 400),
         ];
     }
 }

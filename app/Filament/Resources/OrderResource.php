@@ -4,17 +4,13 @@ namespace App\Filament\Resources;
 
 use App\Enums\OrderStatus;
 use App\Filament\Resources\OrderResource\Pages;
-use App\Filament\Resources\OrderResource\RelationManagers;
 use App\Models\Order;
 use Filament\Forms;
-use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class OrderResource extends Resource
 {
@@ -97,8 +93,6 @@ class OrderResource extends Resource
             ]);
     }
 
-
-
     public static function table(Table $table): Table
     {
         return $table
@@ -109,7 +103,7 @@ class OrderResource extends Resource
                 Tables\Columns\TextColumn::make('created_at')
                     ->searchable()
                     ->sortable(),
-                    Tables\Columns\TextColumn::make('status')
+                Tables\Columns\TextColumn::make('status')
                     ->badge()
                     ->label('Status')
                     ->formatStateUsing(fn (OrderStatus $state): string => match ($state) {
@@ -125,7 +119,7 @@ class OrderResource extends Resource
                         OrderStatus::COMPLETED => 'success',
                         OrderStatus::CANCELLED => 'danger',
                         default => 'secondary',
-                    })
+                    }),
             ])
             ->filters([
                 //

@@ -3,9 +3,8 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProductResource\Pages;
-use App\Filament\Resources\ProductResource\RelationManagers;
+use App\Models\Category;
 use App\Models\Product;
-use Faker\Provider\ar_EG\Text;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -48,7 +47,7 @@ class ProductResource extends Resource
                     ->placeholder('Enter the product price'),
                 Forms\Components\Select::make('category_id')
                     ->label('Category')
-                    ->options(\App\Models\Category::pluck('name', 'id')) // Manually load categories
+                    ->options(Category::pluck('name', 'id')) // Manually load categories
                     ->required()
                     ->searchable()
                     ->placeholder('Select a category'),
@@ -78,7 +77,7 @@ class ProductResource extends Resource
                     ->sortable(),
             ])
             ->filters([
-                // 
+                //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

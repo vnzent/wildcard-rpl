@@ -25,7 +25,7 @@ class EditOrder extends EditRecord
                 ->action(function () {
                     $this->record->status = OrderStatus::PROCESSING; // Use the enum directly
 
-                     $this->save(); // Use save() to update the record
+                    $this->save(); // Use save() to update the record
 
                     // Redirect to the transaction creation page with the saved order ID
                     return redirect()->route('filament.admin.resources.transactions.create', [
@@ -33,7 +33,7 @@ class EditOrder extends EditRecord
                     ]);
                 })
                 ->requiresConfirmation() // Optional: ask for confirmation before processing
-                ->color('success') // Optional: green color for the "Pay" button
+                ->color('success'), // Optional: green color for the "Pay" button
         ];
     }
 }
