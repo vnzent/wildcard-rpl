@@ -14,11 +14,12 @@ class Transaction extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'code',
-        'user_id',
         'order_id',
-        'date',
-        'total_price',
+        'code',
+        'total_amount',
+        'discount',
+        'grand_total',
+        'cashier_id',
     ];
 
     protected static function boot(): void
@@ -32,7 +33,7 @@ class Transaction extends Model
         });
     }
 
-    public function user(): BelongsTo
+    public function cashier(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
