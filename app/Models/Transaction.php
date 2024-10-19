@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\OrderStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,8 +18,9 @@ class Transaction extends Model
         'order_id',
         'code',
         'total_amount',
-        'discount',
         'grand_total',
+        'cash',
+        'change',
         'cashier_id',
     ];
 
@@ -30,6 +32,12 @@ class Transaction extends Model
             $lastId = self::latest('id')->first()->id ?? 0;
 
             $model->code = sprintf('XNX-%s-%s', date('Ymd'), str_pad(++$lastId, 3, '0', STR_PAD_LEFT));
+        });
+
+        static::created(function (self $model) {
+            $model->order->update([
+                'status' => OrderStatus::COMPLETED,
+            ]);
         });
     }
 

@@ -31,6 +31,16 @@ class TransactionResource extends Resource
 
                 Section::make('Transaction Details')
                     ->schema([
+                        // Cashier Information
+                        TextInput::make('cashier_name')
+                            ->label('Cashier')
+                            ->default(auth()->user()->name)
+                            ->disabled()
+                            ->required(),
+
+                        Hidden::make('cashier_id')
+                            ->default(auth()->id())
+                            ->required(),
 
                         // Order-related helper functions
                         TextInput::make('order_number')
@@ -43,46 +53,49 @@ class TransactionResource extends Resource
                             ->default(fn($record) => static::getOrderId($record))
                             ->required(),
 
-                        // Total Amount Displayed to the User (Disabled, calculated)
-                        TextInput::make('total_amount_display')
-                            ->label('Total Amount')
-                            ->default(fn($record) => static::calculateTotalAmount($record))
-                            ->disabled()
-                            ->reactive()
-                            ->required(),
-
                         // Hidden Total Amount for saving to the database
                         Hidden::make('total_amount')
                             ->default(fn($record) => static::calculateTotalAmount($record))
                             ->required(),
 
-                        // Discount Field
-                        TextInput::make('discount')
-                            ->numeric()
-                            ->label('Discount')
-                            ->reactive()
-                            ->afterStateUpdated(
-                                fn(callable $set, $state, $get) =>
-                                $set('grand_total', max(0, $get('total_amount') - $state))
-                            ),
-
                         // Grand Total Field
-                        TextInput::make('grand_total')
+                        TextInput::make('grand_total_display')
                             ->numeric()
                             ->required()
+                            ->disabled()
                             ->label('Grand Total')
                             ->reactive()
-                            ->default(fn($get) => max(0, $get('total_amount') - $get('discount'))),
+                            ->default(fn($get) => max(0, $get('total_amount'))),
 
-                        // Cashier Information
-                        TextInput::make('cashier_name')
-                            ->label('Cashier')
-                            ->default(auth()->user()->name)
-                            ->disabled()
+                        Hidden::make('grand_total')
+                            ->default(fn($get) => $get('grand_total_display'))
                             ->required(),
 
-                        Hidden::make('cashier_id')
-                            ->default(auth()->id())
+                        // Cash Field
+                        TextInput::make('cash')
+                            ->numeric()
+                            ->required()
+                            ->label('Cash')
+                            ->reactive()
+                            ->debounce(600)
+                            ->afterStateUpdated(function ($state, callable $set, $get) {
+                                $grandTotal = $get('grand_total');
+                                $change = $state - $grandTotal;
+                                $set('change_display', $change);
+                                $set('change', $change);
+                            }),
+
+                        // Change Field
+                        TextInput::make('change_display')
+                            ->numeric()
+                            ->required()
+                            ->disabled()
+                            ->label('Change')
+                            ->reactive(),
+
+                        Hidden::make('change')
+                            ->default(fn($get) => $get('change_display'))
+                            ->reactive()
                             ->required(),
                     ]),
             ]);
@@ -94,16 +107,6 @@ class TransactionResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('order.order_number')
                     ->label('Order Number')
-                    ->searchable()
-                    ->sortable(),
-
-                Tables\Columns\TextColumn::make('total_amount')
-                    ->label('Total Amount')
-                    ->searchable()
-                    ->sortable(),
-
-                Tables\Columns\TextColumn::make('discount')
-                    ->label('Discount')
                     ->searchable()
                     ->sortable(),
 
@@ -141,5 +144,27 @@ class TransactionResource extends Resource
             'index' => Pages\ListTransactions::route('/'),
             'create' => Pages\CreateTransaction::route('/create'),
         ];
+    }
+
+    public static function getOrderId($record)
+    {
+        return $record ? $record->order_id : request()->get('order_id');
+    }
+
+    public static function getOrderNumber($record)
+    {
+        $orderId = static::getOrderId($record);
+        return $orderId ? Order::find($orderId)?->order_number : null;
+    }
+
+    public static function calculateTotalAmount($record)
+    {
+        $orderId = static::getOrderId($record);
+        if (!$orderId) {
+            return 0;
+        }
+
+        $order = Order::find($orderId);
+        return $order ? $order->orderProducts->sum(fn($orderProduct) => $orderProduct->product_price * $orderProduct->quantity) : 0;
     }
 }

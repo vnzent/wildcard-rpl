@@ -18,8 +18,9 @@ return new class extends Migration
             $table->foreignIdFor(Order::class)->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();
             $table->string('code')->unique(); // unique code for each transaction
             $table->unsignedBigInteger('total_amount');
-            $table->unsignedBigInteger('discount');
             $table->unsignedBigInteger('grand_total');
+            $table->unsignedBigInteger('cash');
+            $table->unsignedBigInteger('change');
             $table->foreignIdFor(User::class, 'cashier_id')->nullable()->constrained('users')->cascadeOnUpdate()->nullOnDelete();
             $table->softDeletes();
             $table->timestamps();
