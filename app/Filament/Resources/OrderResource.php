@@ -54,6 +54,7 @@ class OrderResource extends Resource
                                                 $product = \App\Models\Product::find($state);
                                                 if ($product) {
                                                     $set('product_price', $product->price);
+                                                    $set('total_price', $product->price);
                                                 }
                                             })
                                             ->placeholder('Select a product'),
@@ -84,7 +85,6 @@ class OrderResource extends Resource
                                             ->label('Total')
                                             ->disabled()
                                             ->numeric()
-                                            ->default(0), // Set default to 0
                                     ]),
                             ])
                             ->collapsible()
