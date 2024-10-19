@@ -6,6 +6,7 @@ use App\Filament\Resources\ProductResource\Pages;
 use App\Models\Category;
 use App\Models\Product;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Support\Enums\FontWeight;
@@ -26,31 +27,34 @@ class ProductResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('sku')
-                    ->label('SKU')
-                    ->required()
-                    ->placeholder('Enter the product code')
-                    ->disabled(function ($record) {
-                        return $record && $record->exists; // Check if $record is not null
-                    }),
-                Forms\Components\TextInput::make('name')
-                    ->label('Name')
-                    ->required()
-                    ->placeholder('Enter the product name'),
-                Forms\Components\TextInput::make('quantity')
-                    ->label('Quantity')
-                    ->required()
-                    ->placeholder('Enter the product quantity'),
-                Forms\Components\TextInput::make('price')
-                    ->label('Price')
-                    ->required()
-                    ->placeholder('Enter the product price'),
-                Forms\Components\Select::make('category_id')
-                    ->label('Category')
-                    ->options(Category::pluck('name', 'id')) // Manually load categories
-                    ->required()
-                    ->searchable()
-                    ->placeholder('Select a category'),
+                Section::make('Product Details')
+                    ->schema([
+                        Forms\Components\TextInput::make('sku')
+                            ->label('SKU')
+                            ->required()
+                            ->placeholder('Enter the product code')
+                            ->disabled(function ($record) {
+                                return $record && $record->exists; // Check if $record is not null
+                            }),
+                        Forms\Components\TextInput::make('name')
+                            ->label('Name')
+                            ->required()
+                            ->placeholder('Enter the product name'),
+                        Forms\Components\TextInput::make('quantity')
+                            ->label('Quantity')
+                            ->required()
+                            ->placeholder('Enter the product quantity'),
+                        Forms\Components\TextInput::make('price')
+                            ->label('Price')
+                            ->required()
+                            ->placeholder('Enter the product price'),
+                        Forms\Components\Select::make('category_id')
+                            ->label('Category')
+                            ->options(Category::pluck('name', 'id')) // Manually load categories
+                            ->required()
+                            ->searchable()
+                            ->placeholder('Select a category'),
+                    ]),
             ]);
     }
 
