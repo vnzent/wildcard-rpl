@@ -15,8 +15,8 @@ class UserSeeder extends Seeder
     {
         User::factory()->createMany([
             ['name' => 'admin', 'email' => 'admin@example.com', 'role' => Role::ADMINISTRATOR],
-            ['name' => 'Arikusuma Wardana', 'email' => 'arikusuma@arijaya.com', 'role' => Role::ADMINISTRATOR],
-            ['name' => 'Nauval Khilmi', 'email' => 'nauvalkhilmi@arijaya.com', 'role' => Role::ADMINISTRATOR],
+            ['name' => 'Arikusuma Wardana', 'email' => 'arikusuma@arijaya.com', 'role' => Role::CASHIER],
+            ['name' => 'Nauval Khilmi', 'email' => 'nauvalkhilmi@arijaya.com', 'role' => Role::INVENTORY_MANAGER],
             ['name' => 'Adi Aryasuta', 'email' => 'adiaryasuta@arijaya.com', 'role' => Role::ADMINISTRATOR],
             ['name' => 'Vincent Dua Orang', 'email' => 'vincentptk@arijaya.com', 'role' => Role::ADMINISTRATOR],
             ['name' => 'Momet Dwika', 'email' => 'mometdwika@arijaya.com', 'role' => Role::ADMINISTRATOR],
