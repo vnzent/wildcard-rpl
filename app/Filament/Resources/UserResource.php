@@ -25,7 +25,7 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Fieldset::make('Personal Information')
+                Forms\Components\Section::make('Personal Information')
                     ->schema([
                         Forms\Components\TextInput::make('name')
                             ->required(),
@@ -34,14 +34,14 @@ class UserResource extends Resource
                             ->required()
                             ->unique(),
                     ]),
-                Forms\Components\Fieldset::make('Authorization')
+                Forms\Components\Section::make('Authorization')
                     ->schema([
                         Forms\Components\Select::make('role')
                             ->options(Role::class)
                             ->required()
                             ->placeholder('Select a role'),
                     ]),
-                Forms\Components\Fieldset::make('Password')
+                Forms\Components\Section::make('Password')
                     ->schema([
                         Forms\Components\TextInput::make('password')
                             ->required()
