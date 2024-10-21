@@ -112,6 +112,7 @@ class TransactionResource extends Resource
 
                 Tables\Columns\TextColumn::make('grand_total')
                     ->label('Grand Total')
+                    ->money('IDR', locale: 'id')
                     ->searchable()
                     ->sortable(),
 
