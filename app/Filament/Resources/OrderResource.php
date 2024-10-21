@@ -105,21 +105,7 @@ class OrderResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
-                    ->label('Status')
-                    ->formatStateUsing(fn (OrderStatus $state): string => match ($state) {
-                        OrderStatus::PENDING => 'Pending',
-                        OrderStatus::PROCESSING => 'Processing',
-                        OrderStatus::COMPLETED => 'Completed',
-                        OrderStatus::CANCELLED => 'Cancelled',
-                        default => 'Unknown',
-                    })
-                    ->color(fn (OrderStatus $state): string => match ($state) {
-                        OrderStatus::PENDING => 'gray',
-                        OrderStatus::PROCESSING => 'warning',
-                        OrderStatus::COMPLETED => 'success',
-                        OrderStatus::CANCELLED => 'danger',
-                        default => 'secondary',
-                    }),
+                    ->label('Status'),
             ])
             ->filters([
                 //
