@@ -4,8 +4,8 @@ namespace App\Filament\Resources\OrderResource\Pages;
 
 use App\Enums\OrderStatus;
 use App\Filament\Resources\OrderResource;
+use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
-use Filament\Pages\Actions\Action; // Correct import for header actions
 use Filament\Resources\Pages\EditRecord;
 
 class EditOrder extends EditRecord
