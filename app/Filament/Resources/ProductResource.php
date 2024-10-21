@@ -40,6 +40,10 @@ class ProductResource extends Resource
                             ->label('Name')
                             ->required()
                             ->placeholder('Enter the product name'),
+                        Forms\Components\Textarea::make('description')
+                            ->label('Description')
+                            ->nullable()
+                            ->placeholder('Enter the product description'),
                         Forms\Components\TextInput::make('quantity')
                             ->label('Quantity')
                             ->required()
