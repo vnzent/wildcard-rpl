@@ -13,6 +13,7 @@ use Filament\Support\Enums\FontWeight;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Pelmered\FilamentMoneyField\Forms\Components\MoneyInput;
 use Str;
 
 class ProductResource extends Resource
@@ -48,7 +49,7 @@ class ProductResource extends Resource
                             ->label('Quantity')
                             ->required()
                             ->placeholder('Enter the product quantity'),
-                        Forms\Components\TextInput::make('price')
+                        MoneyInput::make('price')
                             ->label('Price')
                             ->required()
                             ->placeholder('Enter the product price'),

@@ -15,6 +15,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Pelmered\FilamentMoneyField\Forms\Components\MoneyInput;
 
 class TransactionResource extends Resource
 {
@@ -28,12 +29,10 @@ class TransactionResource extends Resource
     {
         return $form
             ->schema([
-
                 Section::make('Transaction Details')
                     ->schema([
                         // Cashier Information
                         TextInput::make('cashier_name')
-                            ->label('Cashier')
                             ->default(auth()->user()->name)
                             ->disabled()
                             ->required(),
@@ -44,7 +43,6 @@ class TransactionResource extends Resource
 
                         // Order-related helper functions
                         TextInput::make('order_number')
-                            ->label('Order Number')
                             ->default(fn($record) => static::getOrderNumber($record))
                             ->disabled()
                             ->required(),
@@ -59,11 +57,9 @@ class TransactionResource extends Resource
                             ->required(),
 
                         // Grand Total Field
-                        TextInput::make('grand_total_display')
-                            ->numeric()
+                        MoneyInput::make('grand_total_display')
                             ->required()
                             ->disabled()
-                            ->label('Grand Total')
                             ->reactive()
                             ->default(fn($get) => max(0, $get('total_amount'))),
 
@@ -72,10 +68,8 @@ class TransactionResource extends Resource
                             ->required(),
 
                         // Cash Field
-                        TextInput::make('cash')
-                            ->numeric()
+                        MoneyInput::make('cash')
                             ->required()
-                            ->label('Cash')
                             ->reactive()
                             ->debounce(600)
                             ->afterStateUpdated(function ($state, callable $set, $get) {
@@ -86,11 +80,9 @@ class TransactionResource extends Resource
                             }),
 
                         // Change Field
-                        TextInput::make('change_display')
-                            ->numeric()
+                        MoneyInput::make('change_display')
                             ->required()
                             ->disabled()
-                            ->label('Change')
                             ->reactive(),
 
                         Hidden::make('change')
