@@ -33,50 +33,36 @@ class TransactionResource extends Resource
     {
         return $form
             ->schema([
-
                 Section::make('Transaction Details')
                     ->schema([
-                        // Cashier Information
+                        TextInput::make('order_number')
+                            ->default(fn($record) => static::getOrderNumber($record))
+                            ->disabled()
+                            ->required(),
                         TextInput::make('cashier_name')
                             ->label('Cashier')
                             ->default(auth()->user()->name)
                             ->disabled()
                             ->required(),
-
                         Hidden::make('cashier_id')
                             ->default(auth()->id())
                             ->required(),
-
-                        // Order-related helper functions
-                        TextInput::make('order_number')
-                            ->label('Order Number')
-                            ->default(fn($record) => static::getOrderNumber($record))
-                            ->disabled()
-                            ->required(),
-
                         Hidden::make('order_id')
                             ->default(fn($record) => static::getOrderId($record))
                             ->required(),
-
-                        // Hidden Total Amount for saving to the database
                         Hidden::make('total_amount')
                             ->default(fn($record) => static::calculateTotalAmount($record))
                             ->required(),
-
-                        // Grand Total Field
                         TextInput::make('grand_total_display')
+                            ->label('Grand Total')
                             ->numeric()
                             ->required()
                             ->disabled()
-                            ->label('Grand Total')
                             ->reactive()
                             ->default(fn($get) => max(0, $get('total_amount'))),
-
                         Hidden::make('grand_total')
                             ->default(fn($get) => $get('grand_total_display'))
                             ->required(),
-
-                        // Cash Field
                         TextInput::make('cash')
                             ->numeric()
                             ->required()
@@ -89,15 +75,12 @@ class TransactionResource extends Resource
                                 $set('change_display', $change);
                                 $set('change', $change);
                             }),
-
-                        // Change Field
                         TextInput::make('change_display')
                             ->numeric()
                             ->required()
                             ->disabled()
                             ->label('Change')
                             ->reactive(),
-
                         Hidden::make('change')
                             ->default(fn($get) => $get('change_display'))
                             ->reactive()
