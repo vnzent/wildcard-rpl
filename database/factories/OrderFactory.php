@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\OrderStatus;
 use App\Models\Order;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,7 +19,7 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
-            'total_price' => $this->faker->numberBetween(1000, 10000),
+            'status' => OrderStatus::random(),
         ];
     }
 }

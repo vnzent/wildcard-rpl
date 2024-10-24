@@ -19,7 +19,7 @@ class TransactionSeeder extends Seeder
         $users = User::all(['id']);
 
         $orders->each(function (Order $order) use ($users) {
-            Transaction::factory()->for($order)->for($users->random())->has(Payment::factory())->create();
+            Transaction::factory()->for($order)->for($users->random(), 'cashier')->has(Payment::factory())->create();
         });
     }
 }
