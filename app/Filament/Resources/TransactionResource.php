@@ -5,16 +5,21 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\TransactionResource\Pages;
 use App\Models\Order;
 use App\Models\Transaction;
+use Filament\Actions\Action;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Hidden;
-use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\View;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Query\Builder;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportAction;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use pxlrbt\FilamentExcel\Exports\ExcelExport;
 
 class TransactionResource extends Resource
 {
@@ -124,9 +129,21 @@ class TransactionResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([])
+            ->headerActions([
+                ExportAction::make('export')
+                    ->exports([
+                        ExcelExport::make('transactions')
+                            ->fromTable()
+                            ->fromForm()
+//                            ->modifyQueryUsing(fn (array $data, Builder $query) => $query->whereBetween('created_at', [$data['start_date'], $data['end_date']]))
+                            ->askForFilename()
+                            ->askForWriterType(default: \Maatwebsite\Excel\Excel::XLSX)
+                            ->withFilename(fn (string $filename): string => date('Ymd-His') . '-' . $filename),
+                    ]),
+            ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
+                    ExportBulkAction::make()->modal(),
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
