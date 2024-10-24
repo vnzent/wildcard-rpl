@@ -3,7 +3,11 @@
 namespace App\Filament\Resources\TransactionResource\Pages;
 
 use App\Filament\Resources\TransactionResource;
+use App\Models\Transaction;
+use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class CreateTransaction extends CreateRecord
 {
@@ -17,5 +21,17 @@ class CreateTransaction extends CreateRecord
         }
 
         return $data;
+    }
+
+    protected function handleRecordCreation(array $data): Model
+    {
+//        dd($data);
+        return DB::transaction(function () use ($data) {
+            $transaction = Transaction::create($data);
+
+            $transaction->payment()->create($data['payment']);
+
+            return $transaction;
+        });
     }
 }

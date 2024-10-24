@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('order_number')->unique();
+            $table->string('code')->unique();
             $table->foreignIdFor(Customer::class)->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();
             $table->unsignedSmallInteger('status')->default(1);
             $table->softDeletes();

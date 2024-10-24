@@ -93,11 +93,14 @@ class OrderResource extends Resource
             ]);
     }
 
+    /**
+     * @throws \Exception
+     */
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('order_number')
+                Tables\Columns\TextColumn::make('code')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -108,7 +111,9 @@ class OrderResource extends Resource
                     ->label('Status'),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('status')
+                    ->multiple()
+                    ->options(OrderStatus::class),
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([

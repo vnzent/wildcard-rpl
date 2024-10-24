@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\PaymentType;
 use App\Filament\Resources\TransactionResource\Pages;
 use App\Models\Order;
 use App\Models\Transaction;
@@ -11,12 +12,15 @@ use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Number;
+use Pelmered\FilamentMoneyField\Forms\Components\MoneyInput;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportAction;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 use pxlrbt\FilamentExcel\Exports\ExcelExport;
@@ -35,12 +39,7 @@ class TransactionResource extends Resource
             ->schema([
                 Section::make('Transaction Details')
                     ->schema([
-                        TextInput::make('order_number')
-                            ->default(fn($record) => static::getOrderNumber($record))
-                            ->disabled()
-                            ->required(),
-                        TextInput::make('cashier_name')
-                            ->label('Cashier')
+                        TextInput::make('Cashier Name')
                             ->default(auth()->user()->name)
                             ->disabled()
                             ->required(),
@@ -50,41 +49,38 @@ class TransactionResource extends Resource
                         Hidden::make('order_id')
                             ->default(fn($record) => static::getOrderId($record))
                             ->required(),
-                        Hidden::make('total_amount')
-                            ->default(fn($record) => static::calculateTotalAmount($record))
-                            ->required(),
-                        TextInput::make('grand_total_display')
+                        MoneyInput::make('grand_total_display')
                             ->label('Grand Total')
-                            ->numeric()
                             ->required()
                             ->disabled()
                             ->reactive()
-                            ->default(fn($get) => max(0, $get('total_amount'))),
+                            ->default(fn($record) => static::calculateTotalAmount($record)),
                         Hidden::make('grand_total')
-                            ->default(fn($get) => $get('grand_total_display'))
+                            ->default(fn($get) => intval(str_replace('.', '', $get('grand_total_display'))))
                             ->required(),
-                        TextInput::make('cash')
-                            ->numeric()
+                    ]),
+                Section::make('Payment')
+                    ->schema([
+                        Select::make('payment.type')
+                            ->options(PaymentType::class)
+                            ->required(),
+                        MoneyInput::make('payment.amount')
+                            ->autofocus()
                             ->required()
-                            ->label('Cash')
                             ->reactive()
-                            ->debounce(600)
+                            ->debounce()
                             ->afterStateUpdated(function ($state, callable $set, $get) {
-                                $grandTotal = $get('grand_total');
-                                $change = $state - $grandTotal;
-                                $set('change_display', $change);
-                                $set('change', $change);
+                                $grandTotal = intval(str_replace('.', '', $get('grand_total_display')));
+
+                                $change =  $state - $grandTotal;
+
+                                $set('payment.change', $change);
                             }),
-                        TextInput::make('change_display')
-                            ->numeric()
-                            ->required()
-                            ->disabled()
-                            ->label('Change')
-                            ->reactive(),
-                        Hidden::make('change')
-                            ->default(fn($get) => $get('change_display'))
+                        MoneyInput::make('payment.change')
+                            ->default(0)
                             ->reactive()
-                            ->required(),
+                            ->required()
+                            ->readOnly(),
                     ]),
             ]);
     }
@@ -93,20 +89,18 @@ class TransactionResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('order.order_number')
-                    ->label('Order Number')
+                Tables\Columns\TextColumn::make('code')
                     ->searchable()
                     ->sortable(),
-
                 Tables\Columns\TextColumn::make('grand_total')
-                    ->label('Grand Total')
                     ->money('IDR', locale: 'id')
                     ->searchable()
                     ->sortable(),
-
                 Tables\Columns\TextColumn::make('cashier.name')
                     ->label('Cashier')
                     ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('date')
                     ->sortable(),
             ])
             ->filters([
@@ -117,11 +111,10 @@ class TransactionResource extends Resource
                     ->exports([
                         ExcelExport::make('transactions')
                             ->fromTable()
-                            ->fromForm()
 //                            ->modifyQueryUsing(fn (array $data, Builder $query) => $query->whereBetween('created_at', [$data['start_date'], $data['end_date']]))
                             ->askForFilename()
                             ->askForWriterType(default: \Maatwebsite\Excel\Excel::XLSX)
-                            ->withFilename(fn (string $filename): string => date('Ymd-His') . '-' . $filename),
+                            ->withFilename(fn(string $filename): string => date('Ymd-His') . '-' . $filename),
                     ]),
             ])
             ->bulkActions([
@@ -144,6 +137,7 @@ class TransactionResource extends Resource
         return [
             'index' => Pages\ListTransactions::route('/'),
             'create' => Pages\CreateTransaction::route('/create'),
+            'view' => Pages\ViewTransaction::route('/{record}'),
         ];
     }
 

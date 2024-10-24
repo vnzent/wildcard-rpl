@@ -30,6 +30,7 @@ class Transaction extends Model
             $lastId = self::withTrashed()->latest('id')->first()->id ?? 0;
 
             $model->code = sprintf('TRS-%s-%s', date('Ymd'), str_pad(++$lastId, 3, '0', STR_PAD_LEFT));
+            $model->date = date('Y-m-d H:i:s');
         });
 
         static::created(function (self $model) {
