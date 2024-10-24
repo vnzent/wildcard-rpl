@@ -6,7 +6,7 @@ use Arr;
 
 trait RandomCase
 {
-    public static function random(self|array $excepts = []): Role
+    public static function random(self|array $excepts = []): self
     {
         $excepts = Arr::wrap($excepts);
 
