@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignIdFor(Transaction::class)->nullable()->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->unsignedSmallInteger('type');
             $table->unsignedBigInteger('amount');
+            $table->unsignedBigInteger('change');
             $table->softDeletes();
             $table->timestamps();
         });

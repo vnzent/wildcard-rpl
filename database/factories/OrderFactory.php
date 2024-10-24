@@ -19,7 +19,8 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
-            'status' => OrderStatus::random(),
+            'customer_id' => 1,
+            'status' => fn (): OrderStatus => OrderStatus::random(),
         ];
     }
 }

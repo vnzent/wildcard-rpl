@@ -18,11 +18,8 @@ class TransactionFactory extends Factory
     public function definition(): array
     {
         return [
-//            'date' => $this->faker->date(),
-            'total_amount' => rand(1_000, 1_000_000),
+            'date' => $this->faker->date(),
             'grand_total' => rand(1_000, 1_000_000),
-            'cash' => rand(1_000, 1_000_000),
-            'change' => rand(1_000, 1_000_000),
         ];
     }
 }

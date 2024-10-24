@@ -16,12 +16,10 @@ class Transaction extends Model
 
     protected $fillable = [
         'order_id',
-        'code',
-        'total_amount',
-        'grand_total',
-        'cash',
-        'change',
         'cashier_id',
+        'date',
+        'code',
+        'grand_total',
     ];
 
     protected static function boot(): void

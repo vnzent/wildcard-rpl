@@ -21,6 +21,7 @@ class PaymentFactory extends Factory
         return [
             'type' => PaymentType::random(),
             'amount' => rand(1_000, 1_000_000),
+            'change' => rand(1_000, 1_000_000),
         ];
     }
 }

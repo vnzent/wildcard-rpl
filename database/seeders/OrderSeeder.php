@@ -16,7 +16,7 @@ class OrderSeeder extends Seeder
     {
         $products = Product::all(['id', 'price']);
 
-        for ($i = 0; $i < 1010; $i++) {
+        for ($i = 0; $i < 25; $i++) {
             Order::factory()->has(OrderProduct::factory()->for($products->random())->count(rand(1, 20)))->create();
         }
     }

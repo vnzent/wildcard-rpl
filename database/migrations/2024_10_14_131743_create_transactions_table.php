@@ -16,12 +16,10 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Order::class)->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();
-            $table->string('code')->unique(); // unique code for each transaction
-            $table->unsignedBigInteger('total_amount');
-            $table->unsignedBigInteger('grand_total');
-            $table->unsignedBigInteger('cash');
-            $table->unsignedBigInteger('change');
+            $table->date('date')->useCurrent();
             $table->foreignIdFor(User::class, 'cashier_id')->nullable()->constrained('users')->cascadeOnUpdate()->nullOnDelete();
+            $table->string('code')->unique();
+            $table->unsignedBigInteger('grand_total');
             $table->softDeletes();
             $table->timestamps();
         });
