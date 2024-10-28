@@ -26,22 +26,16 @@ class CustomerResource extends Resource
             ->schema([
                 Section::make([
                     Forms\Components\TextInput::make('name')
-                        ->label('Name')
-                        ->required()
-                        ->placeholder('John Doe'),
+                        ->required(),
                     Forms\Components\TextInput::make('email')
-                        ->label('Email')
                         ->required()
-                        ->placeholder('someone@example.com'),
+                        ->unique(),
                     Forms\Components\TextInput::make('phone')
-                        ->label('Phone')
                         ->required()
-                        ->placeholder('1234567890'),
-                    Forms\Components\Datepicker::make('birth_date')
+                        ->tel(),
+                    Forms\Components\DatePicker::make('birth_date')
                         ->native(false)
-                        ->label('Birth Date')
-                        ->required()
-                        ->placeholder('MM/DD/YYYY'),
+                        ->required(),
                 ]),
             ]);
     }
@@ -67,7 +61,10 @@ class CustomerResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
