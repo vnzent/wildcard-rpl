@@ -32,9 +32,11 @@ class CustomerResource extends Resource
                         ->unique(),
                     Forms\Components\TextInput::make('phone')
                         ->required()
+                        ->unique()
                         ->tel(),
                     Forms\Components\DatePicker::make('birth_date')
                         ->native(false)
+                        ->maxDate(today())
                         ->required(),
                 ]),
             ]);
