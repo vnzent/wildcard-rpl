@@ -49,6 +49,9 @@ class ProductResource extends Resource
                         Forms\Components\TextInput::make('quantity')
                             ->label('Quantity')
                             ->required()
+                            ->default(0)
+                            ->minValue(0)
+                            ->numeric()
                             ->placeholder('Enter the product quantity'),
                         MoneyInput::make('price')
                             ->label('Price')
