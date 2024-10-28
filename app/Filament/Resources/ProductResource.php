@@ -71,6 +71,7 @@ class ProductResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('sku')
                     ->label('SKU')
@@ -81,6 +82,9 @@ class ProductResource extends Resource
                     ->description(fn (Product $product) => Str::limit($product->description, 60))
                     ->searchable()
                     ->sortable(),
+                TextColumn::make('category.name')
+                    ->badge()
+                    ->searchable(),
                 TextColumn::make('quantity')
                     ->alignRight()
                     ->searchable()
