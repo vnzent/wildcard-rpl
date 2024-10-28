@@ -33,6 +33,7 @@ class ProductResource extends Resource
                         Forms\Components\TextInput::make('sku')
                             ->label('SKU')
                             ->required()
+                            ->unique()
                             ->placeholder('Enter the product code')
                             ->disabled(function ($record) {
                                 return $record && $record->exists; // Check if $record is not null
