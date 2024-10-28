@@ -56,6 +56,7 @@ class ProductResource extends Resource
                         MoneyInput::make('price')
                             ->label('Price')
                             ->required()
+                            ->numeric()
                             ->placeholder('Enter the product price'),
                         Forms\Components\Select::make('category_id')
                             ->label('Category')
