@@ -13,6 +13,8 @@ class CreateTransaction extends CreateRecord
 {
     protected static string $resource = TransactionResource::class;
 
+    protected static bool $canCreateAnother = false;
+
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         // Check if 'order_id' is passed in the query string and set it
