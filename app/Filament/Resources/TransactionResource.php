@@ -54,7 +54,7 @@ class TransactionResource extends Resource
                             ->required()
                             ->disabled()
                             ->reactive()
-                            ->default(fn($record) => static::calculateTotalAmount($record)),
+                            ->default(fn($record) => static::calculateTotalAmount($record) * 100),
                         Hidden::make('grand_total')
                             ->default(fn($get) => intval(str_replace('.', '', $get('grand_total_display'))))
                             ->required(),

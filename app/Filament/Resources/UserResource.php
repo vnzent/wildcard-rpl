@@ -98,6 +98,12 @@ class UserResource extends Resource
         ];
     }
 
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->role !== Role::CASHIER;
+    }
+
+
     public static function getPages(): array
     {
         return [
